@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美团活动一键跳转</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff6000, #ff3000);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .logo-container {
+            margin-bottom: 25px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff6000, #ff3000);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(255, 96, 0, 0.4);
+        }
+        
+        .logo i {
+            font-size: 60px;
+            color: white;
+        }
+        
+        h1 {
+            color: #ff6000;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .btn-container {
+            margin: 30px 0;
+        }
+        
+        .jump-btn {
+            background: linear-gradient(to right, #ff6000, #ff3000);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 96, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        
+        .jump-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 96, 0, 0.5);
+        }
+        
+        .jump-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .jump-btn i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        .instructions {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            color: #ff6000;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .instructions h3 i {
+            margin-right: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .app-badge {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        
+        .badge {
+            background: #333;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .badge i {
+            margin-right: 5px;
+        }
+        
+        .loading {
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .footer {
+            margin-top: 25px;
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .jump-btn {
+                padding: 15px 30px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+            </div>
+            <h1>美团活动一键跳转</h1>
+            <p class="description">点击下方按钮，立即跳转到美团App参与精彩活动！</p>
+        </div>
+        
+        <div class="btn-container">
+            <button class="jump-btn" id="jumpButton">
+                <i class="fas fa-external-link-alt"></i>打开美团活动
+            </button>
+        </div>
+        
+        <div class="loading" id="loadingText">
+            正在尝试打开美团App... <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i>使用说明</h3>
+            <ul>
+                <li>点击按钮后，系统将尝试打开美团App</li>
+                <li>如已安装美团App，将直接跳转到活动页面</li>
+                <li>如未安装美团App，5秒后将自动跳转至活动网页版</li>
+                <li>如果遇到问题，请尝试更新美团App至最新版本</li>
+            </ul>
+        </div>
+        
+        <div class="app-badge">
+            <div class="badge">
+                <i class="fab fa-android"></i> Android
+            </div>
+            <div class="badge">
+                <i class="fab fa-apple"></i> iOS
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 美团活动跳转页面 | 技术支持</p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('jumpButton').addEventListener('click', openMeituan);
+        
+        function openMeituan() {
+            // 显示加载提示
+            document.getElementById('loadingText').style.display = 'block';
+            
+            // 1. 尝试用私有协议跳转App
+            const appScheme = "imeituan://www.meituan.com/takeout/browser?inner_url=https%3A%2F%2Fclick.meituan.com%2Ft%3Ft%3D1%26c%3D2%26p%3DB_8Mx79zAzTm&lch=cps:mtlm:10:aa5d79d921f34d26bf52de0a743884a1:708mtsqb742:529:1805216220460109862";
+            window.location.href = appScheme;
+            
+            // 2. 若未安装App，5秒后跳转网页版或应用商店
+            setTimeout(function() {
+                if (!document.webkitHidden && !document.hidden) {
+                    // 跳转活动网页版
+                    window.location.href = "https://click.meituan.com/t?t=1&c=2&p=B_8Mx79zAzTm";
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
